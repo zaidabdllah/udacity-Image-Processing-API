@@ -1,0 +1,19 @@
+{
+  "name": "udacity-image-processing-api",
+  "version": "1.0.0",
+  "description": "that's the Full Stack JavaScript Developer C3 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaidabdllah/udacity-Image-Processing-API.git"
+  },
+  "author": "zaid abdallah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaidabdllah/udacity-Image-Processing-API/issues"
+  },
+  "homepage": "https://github.com/zaidabdllah/udacity-Image-Processing-API#readme"
+}

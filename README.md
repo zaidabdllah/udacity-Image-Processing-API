@@ -1,2 +1,8 @@
-# udacity-Image-Processing-API
-that's the Full Stack JavaScript Developer C3 Project
+
+# Initialize the Project
+
+Run the following command first to initialize the project:
+
+```bash
+npm init
+```
