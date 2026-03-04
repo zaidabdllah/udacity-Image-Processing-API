@@ -4,7 +4,7 @@
   "description": "that's the Full Stack JavaScript Developer C3 Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx tsc && node build/index.js"
   },
   "repository": {
     "type": "git",
