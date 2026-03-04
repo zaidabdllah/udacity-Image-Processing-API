@@ -1,7 +1,9 @@
-import plus from '../index';
+import request from 'supertest';
+import app from '../source/index';
 
-describe('plus', () => {
-  it('adds two numbers correctly', () => {
-    expect(plus(2, 3)).toBe(5);
+describe('GET /api/images', () => {
+  it('returns 200 status code', async () => {
+    const response = await request(app).get('/api/images');
+    expect(response.status).toBe(200);
   });
 });
