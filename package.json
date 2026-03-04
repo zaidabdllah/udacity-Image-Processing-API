@@ -4,7 +4,9 @@
   "description": "that's the Full Stack JavaScript Developer C3 Project",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc && node build/index.js"
+    "build": "npx tsc",
+    "start": "npm run build && node build/index.js",
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "@types/supertest": "^7.2.0",
     "eslint": "^10.0.2",
     "jasmine": "^6.1.0",
+    "jasmine-spec-reporter": "^7.0.0",
     "prettier": "^3.8.1",
     "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
