@@ -6,10 +6,9 @@
   "scripts": {
     "build": "npx tsc",
     "start": "npm run build && node build/source/index.js",
-    "dev": "nodemon --watch source --ext ts --exec ts-node source/index.ts",
     "test": "jasmine",
     "lint": "eslint . --ext .ts",
-    "prettier": "prettier --config .prettierrc \"source/**/*.ts\" --write"
+    "format": "prettier --config .prettierrc \"source/**/*.ts\" --write"
   },
   "repository": {
     "type": "git",

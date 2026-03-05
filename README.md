@@ -1,65 +1,126 @@
+# Udacity Image Processing API
 
-# Initialize the Project
+An Express + TypeScript API that resizes local images using `sharp`.
 
-Run first:
+## Project Objective
 
-```bash
-npm init
-```
+Build an endpoint that accepts an image name plus width/height, then returns a resized image.
+Processed images are cached in `images/thumbimgs` to avoid reprocessing the same size.
 
-# Install Dependencies
+## Tech Stack
 
-Install:
+- Node.js
+- TypeScript
+- FileSystem
+- Express
+- Sharp
+- Jasmine + Supertest
+- ESLint + Prettier
 
-```bash
-npm install express sharp
-```
+## Prerequisites
 
-In `dependencies`:
+- Node.js (LTS recommended)
+- npm
 
-- `express`
-- `sharp`
-
-# Install Dev Dependencies
-
-Install:
-
-```bash
-npm install --save-dev typescript ts-node jasmine eslint prettier supertest
-```
-
-In `devDependencies`:
-
-- `typescript`
-- `ts-node`
-- `jasmine`
-- `eslint`
-- `prettier`
-- `supertest`
-
-# Why Add Type Definitions?
-
-This project uses TypeScript, so the JavaScript packages you install also need type definitions.
-
-Install:
+## Installation
 
 ```bash
-npm install --save-dev @types/node @types/express @types/jasmine @types/supertest
+npm install
 ```
 
-These definitions let TypeScript understand the packages used in the project.
+## Scripts
 
-- `@types/express`
-- `@types/node`
-- `@types/jasmine`
-- `@types/supertest`
+- `npm run build` -> Compile TypeScript to `build/`
+- `npm start` -> Build then run production server on port `3000`
+- `npm test` -> Run Jasmine test suite
+- `npm run lint` -> Run ESLint on TypeScript files
+- `npm run format` -> Format TypeScript files (`source/**/*.ts`)
 
-# Initialize TypeScript
+## API Documentation
 
-Run:
+### Endpoint
+
+`GET /api/images`
+
+### Query Parameters
+
+- `filename` (required): image name without extension.
+- `width` (required): positive number.
+- `height` (required): positive number.
+
+### Available Filenames
+
+Use one of the files in `images/fullimgs` (without `.jpg`):
+
+- `encenadaport`
+- `fjord`
+- `icelandwaterfall`
+- `palmtunnel`
+- `santamonica`
+
+### Example Request
 
 ```bash
-npx tsc --init
+http://localhost:3000/api/images?filename=fjord&width=300&height=300
 ```
 
-After that, configure the `tsconfig.json` file with the project settings.
+### Success Response
+
+- `200 OK`
+- Returns the resized JPG image.
+- On first request, the image is generated and saved under:
+  `images/thumbimgs/<filename>_<width>_<height>.jpg`
+- On repeated requests with same params, cached image is returned.
+
+### Error Responses
+
+- `400` -> `Filename is required`
+- `404` -> `File not found`
+- `400` -> `Width is required`
+- `400` -> `Invalid width value (must be a positive number)`
+- `400` -> `Height is required`
+- `400` -> `Invalid height value (must be a positive number)`
+
+## Build, Test, and Run (Submission Flow)
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Compile project:
+
+```bash
+npm run build
+```
+
+3. Run formatter:
+
+```bash
+npm run format
+```
+
+4. Run linter:
+
+```bash
+npm run lint
+```
+
+5. Run tests with jasmine:
+
+```bash
+npm test
+```
+
+6. Start production server:
+
+```bash
+npm start
+```
+
+7. Verify endpoint in browser:
+
+```bash
+http://localhost:3000/api/images?filename=fjord&width=200&height=200
+```
