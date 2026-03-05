@@ -1,6 +1,5 @@
 import express from 'express';
 import validateImageParams from '../../middleware/images/validateImageParams';
-import getValidatedImgPath from '../../utils/images/getValidatedImgPath';
 import ProssingFilePath from '../../utils/images/ProssingFilePath';
 const images = express.Router();
 
