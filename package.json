@@ -9,7 +9,7 @@
     "dev": "nodemon --watch source --ext ts --exec ts-node source/index.ts",
     "test": "jasmine",
     "lint": "eslint . --ext .ts",
-    "prettier": "prettier --config .prettierrc \"*.ts\" --write"
+    "prettier": "prettier --config .prettierrc \"{source}/**/*.ts\" --write"
   },
   "repository": {
     "type": "git",
