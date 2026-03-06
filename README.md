@@ -31,10 +31,10 @@ npm install
 ## Scripts
 
 - `npm run build` -> Compile TypeScript to `build/`
-- `npm start` -> Build then run production server on port `3000`
-- `npm test` -> Run Jasmine test suite
 - `npm run lint` -> Run ESLint on TypeScript files
 - `npm run format` -> Format TypeScript files (`source/**/*.ts`)
+- `npm test` -> Run Jasmine test suite
+- `npm start` -> Build then run production server on port `3000`
 
 ## API Documentation
 
@@ -44,19 +44,10 @@ npm install
 
 ### Query Parameters
 
-- `filename` (required): image name without extension.
-- `width` (required): positive number.
-- `height` (required): positive number.
-
-### Available Filenames
-
-Use one of the files in `images/fullimgs` (without `.jpg`):
-
-- `encenadaport`
-- `fjord`
-- `icelandwaterfall`
-- `palmtunnel`
-- `santamonica`
+- `filename` (required): image name from `images/fullimgs`, and it works whether you pass it with or without the original extension.
+- `width` (required): positive number, and the maximum allowed value is `5000`.
+- `height` (required): positive number, and the maximum allowed value is `5000`.
+- `output` (optional): output image format. Supported values are `jpg`, `jpeg`, `png`, and `webp`.
 
 ### Example Request
 
@@ -64,22 +55,46 @@ Use one of the files in `images/fullimgs` (without `.jpg`):
 http://localhost:3000/api/images?filename=fjord&width=300&height=300
 ```
 
+You can also use `output` to return the processed image in a different format:
+
+```bash
+http://localhost:3000/api/images?filename=fjord&width=300&height=300&output=png
+```
+
+This is useful when you want to control the returned file type instead of keeping the original image extension.
+
 ### Success Response
 
 - `200 OK`
-- Returns the resized JPG image.
+- Returns the resized image with the requested extension.
+- If `output` is not provided, the API keeps the original image extension.
 - On first request, the image is generated and saved under:
-  `images/thumbimgs/<filename>_<width>_<height>.jpg`
-- On repeated requests with same params, cached image is returned.
+  `images/thumbimgs/<filename>_<width>_<height>.<extension>`
+- On repeated requests with the same params, the cached image is returned directly.
 
 ### Error Responses
 
-- `400` -> `Filename is required`
-- `404` -> `File not found`
-- `400` -> `Width is required`
-- `400` -> `Invalid width value (must be a positive number)`
-- `400` -> `Height is required`
-- `400` -> `Invalid height value (must be a positive number)`
+Errors are returned as JSON in this format:
+
+```json
+{
+  "ok": false,
+  "code": "ERROR_CODE",
+  "error": "Error message"
+}
+```
+
+Current error codes:
+
+- `MISSING_FILENAME` -> `filename` was not provided.
+- `FILE_NOT_FOUND` -> the requested image does not exist in `images/fullimgs`.
+- `MISSING_WIDTH` -> `width` was not provided.
+- `INVALID_WIDTH` -> `width` is not a valid positive number.
+- `WIDTH_TOO_LARGE` -> `width` is greater than the maximum allowed value.
+- `MISSING_HEIGHT` -> `height` was not provided.
+- `INVALID_HEIGHT` -> `height` is not a valid positive number.
+- `HEIGHT_TOO_LARGE` -> `height` is greater than the maximum allowed value.
+- `INVALID_OUTPUT_FORMAT` -> `output` is not one of the supported formats.
 
 ## Build, Test, and Run (Submission Flow)
 
@@ -89,28 +104,28 @@ http://localhost:3000/api/images?filename=fjord&width=300&height=300
 npm install
 ```
 
-2. Compile project:
-
-```bash
-npm run build
-```
-
-3. Run formatter:
+2. Run formatter:
 
 ```bash
 npm run format
 ```
 
-4. Run linter:
+3. Run linter:
 
 ```bash
 npm run lint
 ```
 
-5. Run tests with jasmine:
+4. Run tests with Jasmine:
 
 ```bash
 npm test
+```
+
+5. Compile project:
+
+```bash
+npm run build
 ```
 
 6. Start production server:
@@ -124,3 +139,11 @@ npm start
 ```bash
 http://localhost:3000/api/images?filename=fjord&width=200&height=200
 ```
+
+Second example with `output`:
+
+```bash
+http://localhost:3000/api/images?filename=fjord&width=200&height=200&output=webp
+```
+
+This forces the API to return a processed `webp` image even if the source image uses a different extension.
