@@ -15,12 +15,12 @@ describe('GET /api/images', () => {
     expect(response.status).toBe(404);
   });
 
-  fit('returns 404 for non-existing filename with extension', async () => {
+  it('returns 404 for non-existing filename with extension', async () => {
     const response = await request(app).get('/api/images?filename=fjord.png&width=200&height=200');
     expect(response.status).toBe(404);
   });
 
-  fit('returns 400 for unsported output', async () => {
+  it('returns 400 for unsported output', async () => {
     const response = await request(app).get('/api/images?filename=fjord&width=200&height=200&output=mp4');
     expect(response.status).toBe(400);
   }); 
@@ -62,8 +62,8 @@ describe('Test getValidatedImgPath Function', () => {
 
 describe('Test ProssingFilePath Function', () => {
   it('returns valid path for existing file', async () => {
-    const filepath = await ProssingFilePath('fjord', 400, 356);
-    expect(filepath).toBe(path.join(process.cwd(), 'images/thumbimgs', 'fjord_400_356.jpg'));
+    const filepath = await ProssingFilePath('fjord.webp', 400, 356);
+    expect(filepath).toBe(path.join(process.cwd(), 'images/thumbimgs', 'fjord_400_356.webp'));
   });
 });
 
