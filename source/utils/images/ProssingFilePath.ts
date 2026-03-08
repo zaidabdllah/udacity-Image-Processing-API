@@ -9,6 +9,8 @@ const {name, ext} = path.parse(getValidatedImgPathResult as string);
 if(outputext && !outputext.startsWith('.')) {//if outputext exist and not start with dot add dot to the beginning of it
 outputext = `.${outputext}`;
 }
+const thumbDir = path.join(process.cwd(), 'images/thumbimgs');
+await fs.promises.mkdir(thumbDir, { recursive: true });//create the cache folder if it doesn't exist
 const outputExtension = outputext ? outputext : ext; // for filename
 const outputFilename = `${name}_${width}_${height}${outputExtension}`;
 const iscached = fs.existsSync(path.join(process.cwd(), 'images/thumbimgs', outputFilename))
