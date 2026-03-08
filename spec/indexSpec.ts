@@ -4,6 +4,12 @@ import getValidatedImgPath from '../source/utils/images/getValidatedImgPath';
 import ProssingFilePath from '../source/utils/images/ProssingFilePath';
 import path from 'node:path';
 
+import fs from 'fs';
+
+beforeAll(async () => {
+  await fs.promises.mkdir(path.join(process.cwd(), 'images/thumbimgs'), { recursive: true });
+});
+
 describe('GET /api/images', () => {
   it('returns 200 with valid params', async () => {
     const response = await request(app).get('/api/images?filename=fjord&width=200&height=200');
@@ -23,7 +29,7 @@ describe('GET /api/images', () => {
   it('returns 400 for unsported output', async () => {
     const response = await request(app).get('/api/images?filename=fjord&width=200&height=200&output=mp4');
     expect(response.status).toBe(400);
-  }); 
+  });
 
   it('returns 400 for invalid width (non-number)', async () => {
     const response = await request(app).get('/api/images?filename=fjord&width=abc&height=200');
